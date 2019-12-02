@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Contracts
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Tests", "ExcelCompiler.Net.Tests\ExcelCompiler.Net.Tests.csproj", "{08E8CAAA-DB6F-4B3B-9268-DC479A9F37F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Compiler", "ExcelCompiler.Net.Compiler\ExcelCompiler.Net.Compiler.csproj", "{ED8D9E9E-06C9-4301-9966-8121EEBE6A4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{08E8CAAA-DB6F-4B3B-9268-DC479A9F37F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08E8CAAA-DB6F-4B3B-9268-DC479A9F37F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08E8CAAA-DB6F-4B3B-9268-DC479A9F37F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8D9E9E-06C9-4301-9966-8121EEBE6A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D9E9E-06C9-4301-9966-8121EEBE6A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D9E9E-06C9-4301-9966-8121EEBE6A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8D9E9E-06C9-4301-9966-8121EEBE6A4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
