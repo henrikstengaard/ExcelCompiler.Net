@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Readers",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Readers.Tests", "ExcelCompiler.Net.Readers.Tests\ExcelCompiler.Net.Readers.Tests.csproj", "{EC733C64-1D67-4659-947A-32A937EA3238}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Compilers", "ExcelCompiler.Net.Compilers\ExcelCompiler.Net.Compilers.csproj", "{FFEA4E28-1704-4FDD-9082-3A7F352490CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCompiler.Net.Compilers.Tests", "ExcelCompiler.Net.Compilers.Tests\ExcelCompiler.Net.Compilers.Tests.csproj", "{3960E253-4644-4E85-8E28-4FE39B91729A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{EC733C64-1D67-4659-947A-32A937EA3238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC733C64-1D67-4659-947A-32A937EA3238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC733C64-1D67-4659-947A-32A937EA3238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFEA4E28-1704-4FDD-9082-3A7F352490CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEA4E28-1704-4FDD-9082-3A7F352490CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEA4E28-1704-4FDD-9082-3A7F352490CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEA4E28-1704-4FDD-9082-3A7F352490CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3960E253-4644-4E85-8E28-4FE39B91729A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3960E253-4644-4E85-8E28-4FE39B91729A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3960E253-4644-4E85-8E28-4FE39B91729A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3960E253-4644-4E85-8E28-4FE39B91729A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
