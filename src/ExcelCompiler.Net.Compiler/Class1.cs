@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ExcelCompiler.Net.Compiler
+﻿namespace ExcelCompiler.Net.Compiler
 {
-    public class Class1
+    public class CSharpCompiler
     {
     }
 }
