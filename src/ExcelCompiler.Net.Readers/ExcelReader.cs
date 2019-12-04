@@ -82,10 +82,10 @@ namespace ExcelCompiler.Net.Readers
             {
                 return new Formula(string.Empty, Enumerable.Empty<IFormulaToken>());
             }
-
+            var formula = cell.CellFormula ?? string.Empty;
             return new Formula(
-                cell.CellFormula,
-                GetFormulaTokens(cell.CellFormula));
+                formula,
+                GetFormulaTokens(formula));
         }
 
         private IEnumerable<IFormulaToken> GetFormulaTokens(string cellFormula)
