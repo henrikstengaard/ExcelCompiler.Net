@@ -4,65 +4,37 @@ using System.Linq;
 
 namespace ExcelCompiler.Net.Compilers.Strategies
 {
-    public class TopologicalSort<T>
+    public static class Algorithms
     {
-        private class Relations
+        public static IEnumerable<T> TopologicalSort<T>(IEnumerable<T> vertices, IEnumerable<Tuple<T, T>> edges)
         {
-            public int Dependencies;
-            public readonly HashSet<T> Dependents = new HashSet<T>();
-        }
-        
-        private readonly Dictionary<T, Relations> map = new Dictionary<T, Relations>();
+            var graph = new Graph<T>(vertices, edges);
 
-        public void Add(T obj)
-        {
-            if (!map.ContainsKey(obj)) map.Add(obj, new Relations());
-        }
-        
-        public void Add(T obj, T dependency)
-        {
-            if (dependency.Equals(obj)) return;
+            var visited = new HashSet<T>();
 
-            if (!map.ContainsKey(dependency)) map.Add(dependency, new Relations());
-
-            var dependents = map[dependency].Dependents;
-
-            if (!dependents.Contains(obj))
+            if (graph.StartVertices.All(x => !graph.AdjacencyList.ContainsKey(x)))
             {
-                dependents.Add(obj);
-
-                if (!map.ContainsKey(obj)) map.Add(obj, new Relations());
-
-                ++map[obj].Dependencies;
+                throw new ArgumentException("Start vertices doesn´t exist");
             }
+
+            var stack = new Stack<T>(graph.StartVertices);
+
+            while (stack.Count > 0)
+            {
+                var vertex = stack.Pop();
+
+                if (visited.Contains(vertex))
+                    continue;
+
+                visited.Add(vertex);
+
+                foreach (var neighbor in graph.AdjacencyList[vertex].Where(neighbor => !visited.Contains(neighbor)))
+                {
+                    stack.Push(neighbor);
+                }
+            }
+
+            return visited;
         }
-        public void Add(T obj, IEnumerable<T> dependencies)
-        {
-            foreach (var dependency in dependencies) Add(obj, dependency);
-        }
-
-        public void Add(T obj, params T[] dependencies)
-        {
-            Add(obj, dependencies as IEnumerable<T>);
-        }
-
-        public Tuple<IEnumerable<T>, IEnumerable<T>> Sort()
-        {
-            List<T> sorted = new List<T>(), cycled = new List<T>();
-            var map = this.map.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-            sorted.AddRange(map.Where(kvp => kvp.Value.Dependencies == 0).Select(kvp => kvp.Key));
-
-            for (var idx = 0; idx < sorted.Count; ++idx) sorted.AddRange(map[sorted[idx]].Dependents.Where(k => --map[k].Dependencies == 0));
-
-            cycled.AddRange(map.Where(kvp => kvp.Value.Dependencies != 0).Select(kvp => kvp.Key));
-
-            return new Tuple<IEnumerable<T>, IEnumerable<T>>(sorted, cycled);
-        }
-
-        public void Clear()
-        {
-            map.Clear();
-        }        
     }
 }
