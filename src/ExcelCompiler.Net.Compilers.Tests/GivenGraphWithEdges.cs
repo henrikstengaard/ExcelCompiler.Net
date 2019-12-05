@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ExcelCompiler.Net.Compilers.Strategies;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace ExcelCompiler.Net.Compilers.Tests
     public class GivenGraphWithEdges
     {
         [Fact]
-        public void ShouldSortVerticesTopologically()
+        public void ShouldReturnSortedVerticesWhenTopologicallySorted()
         {
             var packageA = new Package("A");
             var packageB = new Package("B");
@@ -22,12 +23,12 @@ namespace ExcelCompiler.Net.Compilers.Tests
             
             var edges = new []
             {
-                new Tuple<Package, Package>(packageA, packageC),
+                new Tuple<Package, Package>(packageA, packageC)
             };
 
-            var sorted = Algorithms.TopologicalSort(vertices, edges);
+            var sorted = Algorithms.TopologicalSort(vertices, edges).ToList();
             
-            Assert.Equal(new []{ packageC, packageA, packageB }, sorted);
+            Assert.Equal(new []{ packageB, packageC, packageA }, sorted);
         }
     }
 }

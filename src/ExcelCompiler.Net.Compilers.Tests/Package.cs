@@ -30,5 +30,10 @@ namespace ExcelCompiler.Net.Compilers.Tests
         {
             return (Name != null ? Name.GetHashCode() : 0);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
