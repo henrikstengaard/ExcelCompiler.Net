@@ -12,7 +12,7 @@ namespace ExcelCompiler.Net.Compilers.CSharp
         public static string FormatFormula(Formula formula)
         {
             var stack = new Stack<string>();
-            foreach (var token in formula.Tokens)
+            foreach (var token in formula.Tokens.Where(token => token.GetType() != typeof(SkipToken)))
             {
                 switch (token)
                 {
