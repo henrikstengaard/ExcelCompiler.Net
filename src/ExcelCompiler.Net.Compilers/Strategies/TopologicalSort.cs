@@ -42,15 +42,16 @@ namespace ExcelCompiler.Net.Compilers.Strategies
                 dependencyEdges[edge.Item2].Add(edge.Item1);
             }
                 
-            var nodes = iEnumerable.Select(x => new Node<T>(x)).ToDictionary(key => key.Value, value => value);
-
             foreach (var vertex in iEnumerable.Where(vertex =>
                 !incomingEdges.ContainsKey(vertex) && !dependencyEdges.ContainsKey(vertex)))
             {
                 yield return vertex;
             }
+
+            var startNodes = iEnumerable.Where(vertex => dependencyEdges.ContainsKey(vertex)).ToList();
+            var nodes = startNodes.ToDictionary(key => key, value => new Node<T>(value));
             
-            var stack = new Stack<T>(iEnumerable.Where(vertex => dependencyEdges.ContainsKey(vertex)));
+            var stack = new Stack<T>(startNodes);
 
             var dependencies = dependencyEdges.Select(x =>
                     new Tuple<T, HashSet<Node<T>>>(x.Key,

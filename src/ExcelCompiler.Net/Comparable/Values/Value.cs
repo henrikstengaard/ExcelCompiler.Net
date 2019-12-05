@@ -1,4 +1,4 @@
-﻿namespace ExcelCompiler.Net.Entities.Comparable.Values
+﻿namespace ExcelCompiler.Net.Comparable.Values
 {
     public interface IValue
     {

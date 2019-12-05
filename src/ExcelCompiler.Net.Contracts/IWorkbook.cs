@@ -6,6 +6,6 @@ namespace ExcelCompiler.Net.Contracts
     {
         ISheet GetSheet(int index);
         ISheet GetSheet(string name);
-        IEnumerable<string> GetSheetNames();
+        IEnumerable<ISheet> GetSheets();
     }
 }

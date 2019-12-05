@@ -1,5 +1,5 @@
 ﻿using System;
-using ExcelCompiler.Net.Entities.Comparable.Values;
+using ExcelCompiler.Net.Comparable.Values;
 
 namespace ExcelCompiler.Net.Extensions
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using ExcelCompiler.Net.Entities.Comparable.Values;
+using ExcelCompiler.Net.Comparable.Values;
 using ExcelCompiler.Net.Extensions;
 
 namespace ExcelCompiler.Net.Comparable

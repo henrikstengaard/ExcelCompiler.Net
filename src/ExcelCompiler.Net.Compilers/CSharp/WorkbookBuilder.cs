@@ -24,21 +24,43 @@ namespace ExcelCompiler.Net.Compilers.CSharp
             {
                 code.AppendLine(sheetBuilder.Build(sheet.Item1, sheet.Item2));
             }
-            
+
             code.AppendLine("public class Workbook : IWorkbook");
             code.AppendLine("{");
-            code.AppendLine("\tprivate readonly IDictionary<string, ISheet> Index;");
+            code.AppendLine("\tprivate readonly IList<ISheet> sheets;");
+            code.AppendLine("\tprivate readonly IDictionary<string, ISheet> index;");
             code.AppendLine("\tpublic Workbook()");
             code.AppendLine("\t{");
-            code.AppendLine("\t\tIndex = new Dictionary<string, ISheet>(new []{");
-
-            foreach (var sheet in sheets)
-            {
-                code.AppendLine($"\t\t\tnew KeyValuePair<string, ISheet>(\"{sheet.Item2.Name}\", new {sheet.Item1}());");
-            }
-
-            code.AppendLine("\t\t}, StringComparer.InvariantCultureIgnoreCase);");
+            code.AppendLine("\t\tsheets = new List<ISheet>(new []{");
+            code.AppendLine(
+                string.Join($",{Environment.NewLine}", sheets.Select(sheet => $"\t\t\tnew {sheet.Item1}()")));
+            code.AppendLine("\t\t});");
+            code.AppendLine("\t\tindex = sheets.ToDictionary(key => key.Name, value => value, StringComparer.Ordinal);");
             code.AppendLine("\t}");
+
+            code.AppendLine("\tpublic ISheet GetSheet(int index)");
+            code.AppendLine("\t{");
+            code.AppendLine("\t\tif (index >= sheets.Count)");
+            code.AppendLine("\t\t{");
+            code.AppendLine("\t\t\tthrow new ArgumentOutOfRangeException(nameof(index));");
+            code.AppendLine("\t\t}");
+            code.AppendLine("\t\treturn sheets[index];");
+            code.AppendLine("\t}");
+
+            code.AppendLine("\tpublic ISheet GetSheet(string name)");
+            code.AppendLine("\t{");
+            code.AppendLine("\t\tif (!index.ContainsKey(name))");
+            code.AppendLine("\t\t{");
+            code.AppendLine("\t\t\tthrow new ArgumentOutOfRangeException(nameof(name));");
+            code.AppendLine("\t\t}");
+            code.AppendLine("\t\treturn index[name];");
+            code.AppendLine("\t}");
+
+            code.AppendLine("\tpublic IEnumerable<ISheet> GetSheets()");
+            code.AppendLine("\t{");
+            code.AppendLine("\t\treturn sheets;");
+            code.AppendLine("\t}");
+
             code.AppendLine("}");
             return code.ToString();
         }

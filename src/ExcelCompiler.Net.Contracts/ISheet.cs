@@ -3,8 +3,10 @@
     public interface ISheet
     {
         string Name { get; }
-        T GetValue<T>(string cellReference);
-        void SetValue<T>(string cellReference, T value);
+        string GetString(string cellReference);
+        double GetNumeric(string cellReference);
+        void SetString(string cellReference, string value);
+        void SetNumeric(string cellReference, double value);
         void Evaluate();
     }
 }

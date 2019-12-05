@@ -1,5 +1,5 @@
 ﻿using ExcelCompiler.Net.Comparable;
-using ExcelCompiler.Net.Entities.Comparable.Values;
+using ExcelCompiler.Net.Comparable.Values;
 using ExcelCompiler.Net.Extensions;
 using static ExcelCompiler.Net.Formulas.Formula;
 using Xunit;
