@@ -4,10 +4,10 @@ using Xunit;
 
 namespace ExcelCompiler.Net.Compilers.Tests
 {
-    public class GivenObjectsWithDependencies
+    public class GivenGraphWithEdges
     {
         [Fact]
-        public void ShouldBeSortedByDependenciesWhenTopologicallySorted()
+        public void ShouldSortVerticesTopologically()
         {
             var packageA = new Package("A");
             var packageB = new Package("B");
