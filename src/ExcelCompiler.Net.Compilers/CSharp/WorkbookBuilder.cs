@@ -31,10 +31,10 @@ namespace ExcelCompiler.Net.Compilers.CSharp
             code.AppendLine("\tprivate readonly IDictionary<string, ISheet> index;");
             code.AppendLine("\tpublic Workbook()");
             code.AppendLine("\t{");
-            code.AppendLine("\t\tsheets = new List<ISheet>(new []{");
+            code.AppendLine("\t\tsheets = new List<ISheet>{");
             code.AppendLine(
                 string.Join($",{Environment.NewLine}", sheets.Select(sheet => $"\t\t\tnew {sheet.Item1}()")));
-            code.AppendLine("\t\t});");
+            code.AppendLine("\t\t};");
             code.AppendLine("\t\tindex = sheets.ToDictionary(key => key.Name, value => value, StringComparer.Ordinal);");
             code.AppendLine("\t}");
 

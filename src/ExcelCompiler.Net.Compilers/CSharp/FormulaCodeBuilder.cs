@@ -82,8 +82,11 @@ namespace ExcelCompiler.Net.Compilers.CSharp
                     case SumToken _:
                         stack.Push($"Sum({stack.Pop()})");
                         break;
+                    case NumberToken numberToken:
+                        stack.Push(CellsClassBuilder.NewComparableValue(CellType.Numeric, string.Empty, numberToken.Value));
+                        break;
                     default:
-                        throw new Exception($"type not supported '{token.GetType()}'");
+                        throw new Exception($"Token type '{token.GetType()}' is not supported");
                 }
             }
             

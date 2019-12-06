@@ -39,7 +39,7 @@ namespace ExcelCompiler.Net.Readers
 
         private IEnumerable<Row> GetRows(ISheet sheet)
         {
-            for (var r = 0; r <= sheet.LastRowNum; r++)
+            for (var r = sheet.FirstRowNum; r <= sheet.LastRowNum; r++)
             {
                 var row = sheet.GetRow(r);
                 if (row == null)
@@ -52,14 +52,14 @@ namespace ExcelCompiler.Net.Readers
 
         private IEnumerable<Cell> GetCells(IRow row)
         {
-            for (var c = 0; c <= row.LastCellNum; c++)
+            for (var c = row.FirstCellNum; c <= row.LastCellNum; c++)
             {
                 var cell = row.GetCell(c);
                 if (cell == null)
                 {
                     continue;
                 }
-                yield return GetCell(row.GetCell(c));
+                yield return GetCell(cell);
             }
         }
 
@@ -74,7 +74,7 @@ namespace ExcelCompiler.Net.Readers
             );
 
         private string GetCellReference(ICell cell) =>
-            new CellReference(cell.RowIndex, cell.ColumnIndex).FormatAsString();
+            new CellReference(cell).FormatAsString();
 
         private Formula GetFormula(ICell cell)
         {
@@ -153,6 +153,8 @@ namespace ExcelCompiler.Net.Readers
                     return new FuncVarToken(funcVarPtg.Name, funcVarPtg.NumberOfOperands);
                 case StringPtg stringPtg:
                     return new StringToken(stringPtg.Value);
+                case NumberPtg numberPtg:
+                    return new NumberToken(numberPtg.Value);
                 default:
                     throw new Exception($"Unsupported formula token '{ptg}'");
             }
