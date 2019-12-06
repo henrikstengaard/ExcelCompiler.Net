@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using ExcelCompiler.Net.Comparable.Values;
 
 namespace ExcelCompiler.Net.Extensions
@@ -7,22 +8,32 @@ namespace ExcelCompiler.Net.Extensions
     {
         public static double AsNumeric(this IValue value)
         {
-            var numericValue = value as NumericValue;
-            if (numericValue == null)
+            switch (value)
             {
-                throw new InvalidCastException("Value is not numeric");
+                case StringValue stringValue:
+                    if (!double.TryParse(stringValue.Value, out var numeric))
+                    {
+                        return 0;
+                    }
+                    return numeric;
+                case NumericValue numericValue:
+                    return numericValue.Value;
+                default:
+                    return 0;
             }
-            return numericValue.Value;
         }
 
         public static string AsString(this IValue value)
         {
-            var stringValue = value as StringValue;
-            if (stringValue == null)
+            switch (value)
             {
-                throw new InvalidCastException("Value is not a string");
+                case StringValue stringValue:
+                    return stringValue.Value;
+                case NumericValue numericValue:
+                    return numericValue.Value.ToString(CultureInfo.CurrentCulture);
+                default:
+                    return String.Empty;
             }
-            return stringValue.Value;
         }
         
         public static bool IsString(this IValue value) => value is StringValue;
