@@ -22,7 +22,8 @@ namespace ExcelCompiler.Net.Comparable
 
         public static ComparableValue operator +(ComparableValue c1, ComparableValue c2)
         {
-            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) || (c2.Value.IsString() && !c2.Value.IsEmptyString()))
+            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) ||
+                (c2.Value.IsString() && !c2.Value.IsEmptyString()))
             {
                 throw new InvalidCastException("Can't add string values");
             }
@@ -32,7 +33,8 @@ namespace ExcelCompiler.Net.Comparable
 
         public static ComparableValue operator -(ComparableValue c1, ComparableValue c2)
         {
-            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) || (c2.Value.IsString() && !c2.Value.IsEmptyString()))
+            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) ||
+                (c2.Value.IsString() && !c2.Value.IsEmptyString()))
             {
                 throw new InvalidCastException("Can't subtract string values");
             }
@@ -42,7 +44,8 @@ namespace ExcelCompiler.Net.Comparable
 
         public static ComparableValue operator *(ComparableValue c1, ComparableValue c2)
         {
-            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) || (c2.Value.IsString() && !c2.Value.IsEmptyString()))
+            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) ||
+                (c2.Value.IsString() && !c2.Value.IsEmptyString()))
             {
                 throw new InvalidCastException("Can't multiply string values");
             }
@@ -52,18 +55,16 @@ namespace ExcelCompiler.Net.Comparable
 
         public static ComparableValue operator /(ComparableValue c1, ComparableValue c2)
         {
-            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) || (c2.Value.IsString() && !c2.Value.IsEmptyString()))
+            if ((c1.Value.IsString() && !c1.Value.IsEmptyString()) ||
+                (c2.Value.IsString() && !c2.Value.IsEmptyString()))
             {
                 throw new InvalidCastException("Can't multiply string values");
             }
 
             var v2 = GetNumericValue(c2);
-            if (v2 == 0.0d)
-            {
-                throw new DivideByZeroException("Comparable value 2 is zero");
-            }
-
-            return new ComparableValue(new NumericValue(GetNumericValue(c1) / v2));
+            return v2 == 0
+                ? new ComparableValue(new NumericValue(0))
+                : new ComparableValue(new NumericValue(GetNumericValue(c1) / v2));
         }
 
         public static bool operator ==(ComparableValue comparableValue1, ComparableValue comparableValue2) =>

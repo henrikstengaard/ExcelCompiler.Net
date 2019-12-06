@@ -151,6 +151,8 @@ namespace ExcelCompiler.Net.Readers
                     return new RefToken(new CellReference(refPtg.Row, refPtg.Column).FormatAsString());
                 case FuncVarPtg funcVarPtg:
                     return new FuncVarToken(funcVarPtg.Name, funcVarPtg.NumberOfOperands);
+                case FuncPtg funcPtg:
+                    return new FuncToken(funcPtg.Name, funcPtg.NumberOfOperands);
                 case StringPtg stringPtg:
                     return new StringToken(stringPtg.Value);
                 case NumberPtg numberPtg:

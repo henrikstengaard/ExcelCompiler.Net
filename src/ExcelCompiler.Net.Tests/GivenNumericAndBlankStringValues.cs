@@ -75,10 +75,10 @@ namespace ExcelCompiler.Net.Tests
         [Fact]
         public void ShouldReturnFailWhenDivided()
         {
-            Assert.Throws<DivideByZeroException>(() =>
-            {
-                var unused = comparableValue1 / comparableValue2;
-            });
+            var result = comparableValue1 / comparableValue2;
+            var numericValue = result.Value as NumericValue;
+            Assert.NotNull(numericValue);
+            Assert.Equal(0, numericValue.Value);
         }
     }
 }

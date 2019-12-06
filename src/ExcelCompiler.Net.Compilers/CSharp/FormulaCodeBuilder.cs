@@ -76,6 +76,9 @@ namespace ExcelCompiler.Net.Compilers.CSharp
                     case FuncVarToken funcVarToken:
                         stack.Push($"{funcVarToken.Name.ToLower().Capitalize()}({string.Join(", ", GetOperands(stack, funcVarToken.Operands))})");
                         break;
+                    case FuncToken funcToken:
+                        stack.Push($"{funcToken.Name.ToLower().Capitalize()}({string.Join(", ", GetOperands(stack, funcToken.Operands))})");
+                        break;
                     case AreaToken areaToken:
                         stack.Push(string.Join(", ", areaToken.CellReferences.Select(x => $"cells[\"{x}\"]")));
                         break;
