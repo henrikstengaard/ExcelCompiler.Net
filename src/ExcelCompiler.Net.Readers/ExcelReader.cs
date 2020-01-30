@@ -52,6 +52,11 @@ namespace ExcelCompiler.Net.Readers
 
         private IEnumerable<Cell> GetCells(IRow row)
         {
+            if (row.FirstCellNum < 0 || row.LastCellNum < 0)
+            {
+                yield break;
+            }
+            
             for (var c = row.FirstCellNum; c <= row.LastCellNum; c++)
             {
                 var cell = row.GetCell(c);
