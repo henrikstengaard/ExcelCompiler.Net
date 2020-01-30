@@ -6,7 +6,7 @@
 
         public StringValue(string value)
         {
-            Value = value;
+            if (value != null) Value = value.Trim();
         }
     }
 }

@@ -5,6 +5,20 @@ using Xunit;
 
 namespace ExcelCompiler.Net.Tests
 {
+    public class GivenStringValuesWithWhitespaces
+    {
+        private readonly ComparableValue comparableValue1 = new ComparableValue(new StringValue("Test"));
+        private readonly ComparableValue comparableValue2 = new ComparableValue(new StringValue("Test "));
+
+        [Fact]
+        public void ShouldReturnTrueWhenComparedEqual()
+        {
+            var result = comparableValue1 == comparableValue2;
+            Assert.True(result);
+        }
+        
+    }
+    
     public class GivenNumericAndStringValues
     {
         private readonly ComparableValue comparableValue1 = new ComparableValue(new NumericValue(1));
