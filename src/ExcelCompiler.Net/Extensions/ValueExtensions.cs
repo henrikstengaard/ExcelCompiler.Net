@@ -11,7 +11,7 @@ namespace ExcelCompiler.Net.Extensions
             switch (value)
             {
                 case StringValue stringValue:
-                    if (!double.TryParse(stringValue.Value, out var numeric))
+                    if (!double.TryParse(stringValue.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var numeric))
                     {
                         return 0;
                     }
@@ -30,7 +30,7 @@ namespace ExcelCompiler.Net.Extensions
                 case StringValue stringValue:
                     return stringValue.Value;
                 case NumericValue numericValue:
-                    return numericValue.Value.ToString(CultureInfo.CurrentCulture);
+                    return numericValue.Value.ToString(CultureInfo.InvariantCulture);
                 default:
                     return String.Empty;
             }

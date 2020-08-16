@@ -4,14 +4,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using ExcelCompiler.Net.Entities;
-using ExcelCompiler.Net.Entities.Tokens;
 
 namespace ExcelCompiler.Net.Compilers.CSharp
 {
     public static class CellsClassBuilder
     {
-        private static readonly CultureInfo Culture = new CultureInfo("en");
-
         public static string Build(IEnumerable<Cell> cells)
         {
             var code = new StringBuilder();
@@ -63,7 +60,7 @@ namespace ExcelCompiler.Net.Compilers.CSharp
                 case CellType.Boolean:
                     throw new NotSupportedException("Boolean cell types are currently not supported");
                 case CellType.Numeric:
-                    return $"new ComparableValue(new NumericValue({numericValue.ToString(Culture)}))";
+                    return $"new ComparableValue(new NumericValue({numericValue.ToString(CultureInfo.InvariantCulture)}))";
                 default:
                     return "new ComparableValue(new StringValue(string.Empty))";
             }
