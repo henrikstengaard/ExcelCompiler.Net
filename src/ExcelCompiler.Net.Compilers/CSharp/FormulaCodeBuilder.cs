@@ -7,8 +7,15 @@ using ExcelCompiler.Net.Extensions;
 
 namespace ExcelCompiler.Net.Compilers.CSharp
 {
+    using System.Reflection;
+
     public static class FormulaCodeBuilder
     {
+        private static readonly IDictionary<string, string> FormulaNames = new Dictionary<string, string>(
+            typeof(Formulas.Formula).GetMethods()
+                .Where(x => x.IsPublic && x.MemberType == MemberTypes.Method)
+                .Select(x => new KeyValuePair<string, string>(x.Name, x.Name)), StringComparer.OrdinalIgnoreCase);
+
         public static string FormatFormula(Formula formula)
         {
             var stack = new Stack<string>();
@@ -41,6 +48,11 @@ namespace ExcelCompiler.Net.Compilers.CSharp
                         var eq2 = stack.Pop();
                         stack.Push($"{eq2} == {eq1}");
                         break;
+                    case NotEqualToken _:
+                        var neq1 = stack.Pop();
+                        var neq2 = stack.Pop();
+                        stack.Push($"{neq2} != {neq1}");
+                        break;
                     case GreaterEqualToken _:
                         var ge1 = stack.Pop();
                         var ge2 = stack.Pop();
@@ -68,34 +80,43 @@ namespace ExcelCompiler.Net.Compilers.CSharp
                         stack.Push($"cells[\"{refToken.CellReference}\"]");
                         break;
                     case IntegerToken integerToken:
-                        stack.Push(CellsClassBuilder.NewComparableValue(CellType.Numeric, string.Empty, integerToken.Value));
+                        stack.Push(CellsClassBuilder.NewComparableValue(CellType.Numeric, string.Empty,
+                            integerToken.Value));
                         break;
                     case StringToken stringToken:
                         stack.Push(CellsClassBuilder.NewComparableValue(CellType.String, stringToken.Value, 0));
                         break;
                     case FuncVarToken funcVarToken:
-                        stack.Push($"{funcVarToken.Name.ToLower().Capitalize()}({string.Join(", ", GetOperands(stack, funcVarToken.Operands))})");
+                        stack.Push(
+                            $"{FormatFuncName(funcVarToken.Name)}({string.Join(", ", GetOperands(stack, funcVarToken.Operands))})");
                         break;
                     case FuncToken funcToken:
-                        stack.Push($"{funcToken.Name.ToLower().Capitalize()}({string.Join(", ", GetOperands(stack, funcToken.Operands))})");
+                        stack.Push(
+                            $"{FormatFuncName(funcToken.Name)}({string.Join(", ", GetOperands(stack, funcToken.Operands))})");
                         break;
                     case AreaToken areaToken:
-                        stack.Push(string.Join(", ", areaToken.CellReferences.Select(x => $"cells[\"{x}\"]")));
+                        stack.Push($"new []{{{string.Join(", ", areaToken.CellReferences.Select(x => $"cells[\"{x}\"]"))}}}");
                         break;
                     case SumToken _:
                         stack.Push($"Sum({stack.Pop()})");
                         break;
                     case NumberToken numberToken:
-                        stack.Push(CellsClassBuilder.NewComparableValue(CellType.Numeric, string.Empty, numberToken.Value));
+                        stack.Push(CellsClassBuilder.NewComparableValue(CellType.Numeric, string.Empty,
+                            numberToken.Value));
                         break;
                     default:
                         throw new Exception($"Token type '{token.GetType()}' is not supported");
                 }
             }
-            
+
             return stack.Pop();
         }
-        
+
+        public static string FormatFuncName(string name)
+        {
+            return FormulaNames.ContainsKey(name) ? FormulaNames[name] : name;
+        }
+
         public static IEnumerable<string> GetOperands(Stack<string> stack, int numberOfOperands)
         {
             var operands = new List<string>();
@@ -103,6 +124,7 @@ namespace ExcelCompiler.Net.Compilers.CSharp
             {
                 operands.Add(stack.Pop());
             }
+
             operands.Reverse();
             return operands;
         }

@@ -121,6 +121,8 @@ namespace ExcelCompiler.Net.Readers
                     return new LessThanToken(lessThanPtg.NumberOfOperands);
                 case EqualPtg equalPtg:
                     return new EqualToken(equalPtg.NumberOfOperands);
+                case NotEqualPtg notEqualPtg:
+                    return new NotEqualToken(notEqualPtg.NumberOfOperands);
                 case IntPtg intPtg:
                     return new IntegerToken(intPtg.Value);
                 case ParenthesisPtg _:

@@ -14,7 +14,7 @@ namespace ExcelCompiler.Net.Tests
             var comparableValue1 = new ComparableValue(new NumericValue(1));
             var comparableValue2 = new ComparableValue(new NumericValue(2));
             var comparableValue3 = new ComparableValue(new NumericValue(3));
-            var result = Sum(comparableValue1, comparableValue2, comparableValue3);
+            var result = Sum(new []{comparableValue1, comparableValue2, comparableValue3});
             Assert.Equal(6, result.Value.AsNumeric());
         }
     }

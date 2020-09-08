@@ -10,9 +10,10 @@ namespace ExcelCompiler.Net.Compilers.Tests
 {
     public class GivenSimpleWorkbook
     {
+        private const string SheetName = "Test";
         private readonly Workbook workbook = new Workbook(new[]
         {
-            new Sheet("Test", new[]
+            new Sheet(SheetName, new[]
             {
                 new Row(new[]
                 {
@@ -60,7 +61,7 @@ namespace ExcelCompiler.Net.Compilers.Tests
             var compiledWorkbook = assembly.CreateInstance($"{assemblyName}.Workbook") as IWorkbook;
             Assert.NotNull(compiledWorkbook);
 
-            var sheet = compiledWorkbook.GetSheet("Test");
+            var sheet = compiledWorkbook.GetSheet(SheetName);
             sheet.Evaluate();
             var value = sheet.GetNumeric("A1");
             Assert.Equal(84, value);

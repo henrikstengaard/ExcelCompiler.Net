@@ -16,7 +16,7 @@
 
     <ItemGroup>
       <None Update="Data\tests.xlsx">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
